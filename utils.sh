@@ -35,6 +35,9 @@ function print_intro(){
     echo "  - Miniconda"
     echo "  - vantage6-node"
     echo ""
+    echo "During the installation you will get prompted for your sudo password. This "
+    echo "is required for the installation of some packages."
+    echo ""
     echo "The conda environment 'vantage6' is created. This environment contains "
     echo "the vantage6 CLI."
     echo ""
@@ -140,7 +143,7 @@ is_set_or_prompt() {
         else
             echo -n "  ? Please enter the value for $var_name ($hint): "; read -r VALUE
         fi
-        declare "$var_name=$VALUE"
+        export $var_name="$VALUE"
     fi
 }
 

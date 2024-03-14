@@ -54,29 +54,28 @@ if [ "$WRITE_CONFIG_FILE" = true ]; then
     is_set_or_prompt "API_KEY"
     export API_KEY=$API_KEY
 
+    if [ -z "$WHITELIST_VERSION" ]; then
+        select_whitelist_method
+    fi
+    export WHITELIST_VERSION=$WHITELIST_VERSION
+
     # OMOP database settings
-    is_set_or_prompt "OMOP_API_PROTOCOL" "http/https"
+    is_set_or_prompt "OMOP_API_PROTOCOL" "'http' or 'https'"
     export OMOP_API_PROTOCOL=$OMOP_API_PROTOCOL
     is_set_or_prompt "OMOP_API_URI" "ip or domain"
     export OMOP_API_URI=$OMOP_API_URI
-    is_set_or_prompt "OMOP_API_PORT" "typically 80 or 443"
+    is_set_or_prompt "OMOP_API_PORT" "e.g. '80' or '443'"
     export OMOP_API_PORT=$OMOP_API_PORT
+    is_set_or_prompt "OMOP_API_PATH" "e.g. '/omop' or leave empty"
 
-    select_whitelist_method
 
     case "$WHITELIST_VERSION" in
         "Domain")
             # Code to execute if DB_METHOD is "docker"
-
-            is_set_or_prompt "WHITELIST_DOMAIN"
-            export WHITELIST_DOMAIN=$WHITELIST_DOMAIN
             include_content=$(<$SCRIPT_DIR/templates/whitelist-domain.tpl)
-
             ;;
         "IP")
             # Code to execute if DB_METHOD is "ssh_tunnel"
-            is_set_or_prompt "WHITELIST_IP"
-            export WHITELIST_IP=$WHITELIST_IP
             include_content=$(<$SCRIPT_DIR/templates/whitelist-ip.tpl)
             ;;
         *)
@@ -85,8 +84,6 @@ if [ "$WRITE_CONFIG_FILE" = true ]; then
             exit 1
             ;;
     esac
-    is_set_or_prompt "WHITELIST_PORT"
-    export WHITELIST_PORT=$WHITELIST_PORT
 
     escaped_content=$(echo "$include_content" | sed -e ':a' -e 'N' -e '$!ba' -e 's/[\/&]/\\&/g' -e 's/\n/NEWLINE/g')
     sed "s/{{WHITELIST}}/$escaped_content/g" $SCRIPT_DIR/templates/node-config.tpl | sed 's/NEWLINE/\n/g' > $CONFIG_FILE_TEMPLATE
@@ -100,20 +97,13 @@ if [ "$WRITE_CONFIG_FILE" = true ]; then
     create_config_file $CONFIG_FILE_TEMPLATE $CONFIG_FILE
 
     if [ "$KEEP_PREVIOUS_SETTINGS" = false ]; then
-        print_step "Creating environment file"
+        print_step "Creating environment file ...."
         echo "export API_KEY=$API_KEY" > $SCRIPT_DIR/settings.env
-
         echo "export OMOP_API_PROTOCOL=$OMOP_API_PROTOCOL" >> $SCRIPT_DIR/settings.env
         echo "export OMOP_API_URI=$OMOP_API_URI" >> $SCRIPT_DIR/settings.env
         echo "export OMOP_API_PORT=$OMOP_API_PORT" >> $SCRIPT_DIR/settings.env
-
-        if is_set "WHITELIST_DOMAIN" "silent"; then
-            echo "export WHITELIST_DOMAIN=$WHITELIST_DOMAIN" >> $SCRIPT_DIR/settings.env
-        fi
-        if is_set "WHITELIST_IP" "silent"; then
-            echo "export WHITELIST_IP=$WHITELIST_IP" >> $SCRIPT_DIR/settings.env
-        fi
-        echo "export WHITELIST_PORT=$WHITELIST_PORT" >> $SCRIPT_DIR/settings.env
+        echo "export WHITELIST_VERSION=$WHITELIST_VERSION" >> $SCRIPT_DIR/settings.env
+        echo "export OMOP_API_PATH=$OMOP_API_PATH" >> $SCRIPT_DIR/settings.env
     fi
 
 fi

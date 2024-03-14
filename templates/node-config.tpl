@@ -52,7 +52,7 @@ databases:
   #   type: csv
 
   - label: omop_api
-    uri: ${OMOP_API_PROTOCOL}://${OMOP_API_URI}:${OMOP_API_PORT}
+    uri: ${OMOP_API_PROTOCOL}://${OMOP_API_URI}:${OMOP_API_PORT}${OMOP_API_PATH}
     type: other
     # additional environment variables that are passed to the algorithm
     # containers (or their wrapper). This can be used to for usernames

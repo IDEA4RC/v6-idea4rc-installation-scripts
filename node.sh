@@ -24,9 +24,10 @@ if ! check_env "vantage6"; then
 fi
 
 print_step "Activating the vantage6 environment"
-source $HOME/miniconda/etc/profile.d/conda.sh
+source $HOME/miniconda3/etc/profile.d/conda.sh
 conda activate vantage6
 
 # start the node
 print_step "$COMMAND the $NODE_NAME node"
 v6 node $COMMAND --name $NODE_NAME
+print_info "Done"

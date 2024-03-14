@@ -1,6 +1,5 @@
 whitelist:
-  domains:
   ips:
-    - {{IP}}
+    - ${OMOP_API_URI}
   ports:
-    - {{PORT}}
+    - ${OMOP_API_PORT}
