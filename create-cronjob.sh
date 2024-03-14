@@ -8,7 +8,7 @@ source $SCRIPT_DIR/utils.sh
 print_step "Adding cron job"
 if ! check_command "crontab"; then
     print_warning "Crontab not installed. Installing crontab."
-    sudo dnf install crontabs -y &>> $LOG_DIR/install-crontab.log
+    sudo apt install cron -y &>> $LOG_DIR/install-crontab.log
 fi
 if ! (crontab -l 2>/dev/null | grep -q "$SCRIPT_DIR/start.sh"); then
     (crontab -l 2>/dev/null; echo "@reboot $SCRIPT_DIR/start.sh") | crontab -

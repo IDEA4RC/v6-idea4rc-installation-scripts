@@ -9,6 +9,13 @@ print_step "Checking if Miniconda is already installed"
 if command -v conda &> /dev/null; then
     print_warning "Miniconda is already installed." | tee -a $LOG_DIR/miniconda-install.log
 else
+
+    print_step "Check that curl is installed"
+    if ! check_command "curl"; then
+        print_warning "Curl not installed. Installing Curl"
+        sudo apt install curl -y &>> $LOG_DIR/miniconda-install.log
+    fi
+
     # Download the Miniconda installer script
     print_step "Downloading the Miniconda installer script"
     curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh &>> $LOG_DIR/miniconda-install.log

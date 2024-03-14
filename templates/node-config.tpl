@@ -51,9 +51,9 @@ databases:
   #   uri: C:\data\datafile.csv
   #   type: csv
 
-  - label: omop
-    uri: jdbc:postgresql://${OMOP_HOST}:${OMOP_PORT}/${OMOP_DATABASE}
-    type: omop
+  - label: omop_api
+    uri: ${OMOP_API_PROTOCOL}://${OMOP_API_URI}:${OMOP_API_PORT}
+    type: other
     # additional environment variables that are passed to the algorithm
     # containers (or their wrapper). This can be used to for usernames
     # and passwords for example. Note that these environment variables are
@@ -61,13 +61,14 @@ databases:
     # database. In case you want to pass some environment variable to all
     # algorithms regard less of the data source the user specifies you can
     # use the `algorithm_env` setting.
-    env:
-      user: ${OMOP_USER}
-      password: ${OMOP_PASSWORD}
-      dbms: postgresql
-      cdm_database: ${OMOP_DATABASE}
-      cdm_schema: ${OMOP_CDM_SCHEMA}
-      results_schema: ${OMOP_RESULT_SCHEMA}
+    # env:
+    #   user: ${OMOP_USER}
+    #   password: ${OMOP_PASSWORD}
+    #   dbms: postgresql
+    #   cdm_database: ${OMOP_DATABASE}
+    #   cdm_schema: ${OMOP_CDM_SCHEMA}
+    #   results_schema: ${OMOP_RESULT_SCHEMA}
+
 
 
 # end-to-end encryption settings
@@ -108,7 +109,7 @@ policies:
 #     username: docker-registry-user
 #     password: docker-registry-password
 
-{{DATABASE_CONNECTION}}
+{{WHITELIST}}
 
 # # Whitelist URLs and/or IP addresses that the algorithm containers are
 # # allowed to reach using the http protocol.

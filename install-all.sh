@@ -11,12 +11,9 @@ mkdir -p $LOG_DIR
 
 # Update the current system
 print_header "Updating the current system (this may take a while)"
-sudo dnf update -y &>> $LOG_DIR/update-system.log
+sudo apt update &>> $LOG_DIR/update-system.log
+sudo apt upgrade -y &>> $LOG_DIR/update-system.log
 print_step "System updated"
-
-# Run the install-docker.sh script
-print_header "Installing Docker"
-source $SCRIPT_DIR/install-docker.sh
 
 # Run the install-miniconda.sh script
 print_header "Installing Miniconda"

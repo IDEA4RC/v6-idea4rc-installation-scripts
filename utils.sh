@@ -32,23 +32,14 @@ function print_intro(){
     print_header "vantage6 installation script"
     echo "This script will install the following:"
     echo ""
-    echo "  - Docker"
     echo "  - Miniconda"
     echo "  - vantage6-node"
-    echo ""
-    echo "The user 'vantage6-node' is created. This user has no sudo privileges."
-    echo "This user is used to setup a SSH tunnel from the vantage6 node to this "
-    echo "(host) machine which hosts the OMOP database. For this to work, the "
-    echo "user needs to be able to SSH into the host machine without a password."
-    echo "Therefore a private/public key pair is generated for this user and "
-    echo "the public key is added to the authorized_keys file of this machine."
-    echo "The private key of this user is then mounted by the vantage6-node!"
     echo ""
     echo "The conda environment 'vantage6' is created. This environment contains "
     echo "the vantage6 CLI."
     echo ""
-    echo "The OMOP database is to be expected to be running on this machine when "
-    echo "the node is started. Make sure it listens on port 5432."
+    echo "The OHDSI API should be reachable by this machine. During the installation"
+    echo "you will be asked for the connection details of the OMOP database."
     echo ""
 }
 
@@ -57,7 +48,6 @@ print_outro(){
     echo "To check if any installation steps failed, check the log files:"
     echo ""
     echo "  - $LOG_DIR/update-system.log"
-    echo "  - $LOG_DIR/docker-install.log"
     echo "  - $LOG_DIR/miniconda-install.log"
     echo "  - $LOG_DIR/vantage6-install.log"
     echo "  - $LOG_DIR/create-node.log"
@@ -67,11 +57,6 @@ print_outro(){
     echo ""
     echo "  conda activate vantage6"
     echo ""
-    echo "Make sure the OMOP database is running and listening on $TUNNEL_REMOTE_IP:$TUNNEL_REMOTE_PORT "
-    echo "before starting the vantage6-node."
-    echo ""
-    echo -e "\e[1;32mYou need to restart this machine before you can start the node.\e[0m"
-    echo -e "\e[1;32mMake sure that you can reach this machine after reboot!\e[0m"
     print_divider
 }
 
@@ -147,11 +132,37 @@ set_if_unset() {
 }
 is_set_or_prompt() {
     local var_name="$1"
+    local hint="$2"
 
-    if ! is_set "$var_name"; then
-        echo -n "  ? Please enter the value for $var_name: "; read -r VALUE
+    if ! is_set "$var_name" "silent"; then
+        if [ -z "$hint" ]; then
+            echo -n "  ? Please enter the value for $var_name: "; read -r VALUE
+        else
+            echo -n "  ? Please enter the value for $var_name ($hint): "; read -r VALUE
+        fi
         declare "$var_name=$VALUE"
     fi
+}
+
+select_whitelist_method() {
+    print_step "Do you want to whitelist a domain or IP?:"
+    # print_step "Please choose an option:"
+    local options=("IP" "Domain")
+    for i in "${!options[@]}"; do
+        echo "  # $((i+1)). ${options[$i]}"
+    done
+
+    while true; do
+        echo -e -n "\e[32m  ? Please select an option: \e[0m"; read -n1 -r REPLY
+        if [[ $REPLY -ge 1 && $REPLY -le ${#options[@]} ]]; then
+            opt="${options[$((REPLY-1))]}"
+            break
+        else
+            print_error "Invalid option. Please try again."
+        fi
+    done
+    WHITELIST_VERSION=$opt
+    print_step $WHITELIST_VERSION
 }
 
 select_database_method() {
