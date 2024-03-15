@@ -29,7 +29,7 @@ fi
 
 # Activate the base environment
 print_step "Initializing Miniconda to automatically update the PATH"
-source $HOME/miniconda/bin/activate &>> $LOG_DIR/miniconda-install.log
+$HOME/miniconda/bin/conda init &>> $LOG_DIR/miniconda-install.log
 
 print_step "Activating the base environment"
-conda init &>> $LOG_DIR/miniconda-install.log
+source $HOME/miniconda/bin/activate &>> $LOG_DIR/miniconda-install.log

@@ -7,9 +7,9 @@ source $HOME/.bashrc
 source $SCRIPT_DIR/utils.sh
 print_info &>> $LOG_DIR/vantage6-install.log
 
-if ! command -v conda &> /dev/null; then
+if ! (command -v conda &> /dev/null); then
     print_error "Conda not available? Open a new shell and try again."
-else
+fi
 
 # Check if the vantage6 environment already exists
 print_step "Checking if the vantage6 environment already exists"
