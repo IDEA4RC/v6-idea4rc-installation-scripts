@@ -1,9 +1,9 @@
 <img src="https://github.com/IKNL/guidelines/blob/master/resources/logos/iknl_nl.png?raw=true" width=200 align="right">
 
-# vantage6 BLUEBERRY Installation Scripts
+# vantage6 IDEA4RC Installation Scripts
 
 This repository contains convenience scripts for installing vantage6 nodes at data
-stations participating in the BLUEBERRY project.
+stations participating in the IDEA4RC project.
 
 ## Getting Started
 These instructions will get you a running vantage6 node that is connected to the
