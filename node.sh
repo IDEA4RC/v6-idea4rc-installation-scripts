@@ -11,17 +11,17 @@ fi
 
 
 print_header "$COMMAND the vantage6-node"
-print_step "Checking if conda is installed"
-if ! check_command "conda"; then
-    print_error "Did you run the installation script? Exiting..."
-    exit 1
-fi
+# print_step "Checking if conda is installed"
+# if ! check_command "conda"; then
+#     print_error "Did you run the installation script? Exiting..."
+#     exit 1
+# fi
 
-print_step "Checking if the vantage6 environment exists"
-if ! check_env "vantage6"; then
-    print_error "Did you run the installation script? Exiting..."
-    exit 1
-fi
+# print_step "Checking if the vantage6 environment exists"
+# if ! check_env "vantage6"; then
+#     print_error "Did you run the installation script? Exiting..."
+#     exit 1
+# fi
 
 print_step "Activating the vantage6 environment"
 source $HOME/miniconda/bin/activate vantage6
