@@ -22,6 +22,7 @@ IDEA4RC server.
     ```
 - A running instance from the OHDSI API server. During configuration you will be promted
   to provide connection details.
+- Make sure docker is installed and the current user is added in the `docker` group.
 
 ### Installing
 Go to the home directory of the user that has `sudo` permissions and execute the
