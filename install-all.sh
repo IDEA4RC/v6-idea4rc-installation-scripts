@@ -11,7 +11,9 @@ mkdir -p $LOG_DIR
 
 # Update the current system
 print_header "Updating the current system (this may take a while)"
+print_step "Updating the system"
 sudo apt update &>> $LOG_DIR/update-system.log
+print_step "Upgrading the system"
 sudo apt upgrade -y &>> $LOG_DIR/update-system.log
 print_step "System updated"
 

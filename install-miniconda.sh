@@ -30,5 +30,5 @@ else
 
     # Activate the base environment
     print_step "Activating the base environment"
-    source $HOME/.bashrc
+    source $HOME/miniconda/bin/activate
 fi
