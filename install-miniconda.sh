@@ -25,10 +25,11 @@ else
     bash Miniconda3-latest-Linux-x86_64.sh -b -p $HOME/miniconda &>> $LOG_DIR/miniconda-install.log
 
     # Initialize Miniconda to automatically update the PATH
-    print_step "Initializing Miniconda to automatically update the PATH"
-    $HOME/miniconda/bin/conda init &>> $LOG_DIR/miniconda-install.log
-
-    # Activate the base environment
-    print_step "Activating the base environment"
-    source $HOME/miniconda/bin/activate
 fi
+
+# Activate the base environment
+print_step "Initializing Miniconda to automatically update the PATH"
+source $HOME/miniconda/bin/activate &>> $LOG_DIR/miniconda-install.log
+
+print_step "Activating the base environment"
+conda init &>> $LOG_DIR/miniconda-install.log
