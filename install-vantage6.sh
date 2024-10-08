@@ -7,7 +7,7 @@ source $HOME/.bashrc
 source $SCRIPT_DIR/utils.sh
 print_info &>> $LOG_DIR/vantage6-install.log
 
-DEFAULT_VANTAGE6_VERSION="4.4.0"
+DEFAULT_VANTAGE6_VERSION="4.7.1"
 
 if ! (command -v conda &> /dev/null); then
     print_error "Conda not available? Open a new shell and try again."
@@ -40,7 +40,7 @@ then
     # Ask for confirmation to upgrade the vantage6 package
     if confirm "Do you want to install an alternative version?"
     then
-        user_input "vantage6 version (e.g. 4.3.1): "
+        user_input "vantage6 version (e.g. 4.7.1): "
         user_vantage6_version=$REPLY
         print_step "Installing the vantage6 package: $user_vantage6_version"
         pip install vantage6==$user_vantage6_version &>> $LOG_DIR/vantage6-install.log
