@@ -2,13 +2,13 @@
 api_key: ${API_KEY}
 
 # URL of the vantage6 server
-server_url: https://blueberry.vantage6.ai
+server_url: https://host02.idea.lst.tfo.upm.es
 
 # port the server listens to
 port: 443
 
 # API path prefix that the server uses. Usually '/api' or an empty string
-api_path: ''
+api_path: '/server'
 
 # set the devices the algorithm container is allowed to request.
 algorithm_device_requests:
