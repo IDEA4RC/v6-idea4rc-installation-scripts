@@ -53,8 +53,8 @@ encryption:
 policies:
   # Control which algorithm images are allowed to run on this node. This is
   # expected to be a valid regular expression.
-  allowed_algorithms:
-    - ^harbor2\.vantage6\.ai/[a-zA-Z]+/[a-zA-Z]+
+  # allowed_algorithms:
+    # - ^harbor2\.vantage6\.ai/[a-zA-Z]+/[a-zA-Z]+
     # - myalgorithm.ai/some-algorithm
 
   # The basics algorithm (harbor2.vantage5.ai/algorithms/basics) is whitelisted
