@@ -30,10 +30,10 @@ following steps in `bash`:
 
 ```bash
 # Clone this repository to your local machine:
-git clone https://github.com/IDEA4RC/v6-blueberry-installation-scripts.git
+git clone https://github.com/IDEA4RC/v6-idea4rc-installation-scripts.git
 
 # Navigate to the cloned repository:
-cd v6-blueberry-installation-scripts
+cd v6-idea4rc-installation-scripts.git
 
 # Add execute permissions to the scripts:
 chmod +x *.sh
